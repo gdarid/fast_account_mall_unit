@@ -1,0 +1,14 @@
+__pycache__
+/.pytest_cache
+/.tox
+/*.egg-info/
+/htmlcov/
+_tmp
+
+/.coverage
+/coverage.svg
+*.db
+
+# Uncomment the following line to "gitignore" the .env file if necessary
+# /.env
+/.idea
