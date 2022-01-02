@@ -12,3 +12,4 @@ _tmp
 # Uncomment the following line to "gitignore" the .env file if necessary
 # /.env
 /.idea
+/.vscode
