@@ -61,23 +61,3 @@ coverage report
 coverage html
 ```
 
-### Collection endpoints and pagination
-
-The collection entities are : accounts, malls, units
-A summary of the endpoints can be seen here when the app is running : [Interactive API docs](http://127.0.0.1:8000/docs)
-
-The collection endpoints ( /<entities> ) expose a simple pagination mechanism
-
-#### Requests
-
-Several requests may be necessary to get all the data (pagination) 
-
-The query parameters are 
-- skip (an offset number) : this parameter must be increased for each new request to skip the previous retrievec lines 
-- limit : this value defines the maximum number of "rows" that are retrieved each time
-
-#### Responses
-
-Each response gives the total number of "rows" and a certain number of "rows".
-So it is possible to compute the necessary number of requests given the maximum number of "rows" (limit parameter) 
-that are retrieved each time.
