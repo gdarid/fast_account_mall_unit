@@ -61,3 +61,6 @@ coverage report
 coverage html
 ```
 
+### Github workflows
+
+The github workflows can be found in the `.github` folder
