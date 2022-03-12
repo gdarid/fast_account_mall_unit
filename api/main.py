@@ -7,6 +7,8 @@ from .database import SessionLocal, engine
 
 
 models.Base.metadata.create_all(bind=engine)
+
+
 app = FastAPI()
 
 
@@ -29,7 +31,11 @@ async def redirect_fastapi():
 # Accounts
 @app.post("/accounts/", response_model=schemas.Account, tags=["account"])
 def create_account(account: schemas.AccountInit, db: Session = Depends(get_db)):
-    return crud.create_account(db, account)
+    try:
+        res = crud.create_account(db, account)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    return res
 
 
 @app.get("/accounts/", tags=["account"])
@@ -52,7 +58,11 @@ def update_account(account_id: int, account: schemas.AccountInit, db: Session = 
     db_item = crud.get_account(db, account_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail=f"Account {account_id} not found")
-    return crud.update_account(db, account_id, account, db_item)
+    try:
+        res = crud.update_account(db, account_id, account, db_item)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    return res
 
 
 @app.delete("/accounts/{account_id}", tags=["account"])

@@ -9,7 +9,7 @@ SQLALCHEMY_DATABASE_PATH = "./test.db"
 SQLALCHEMY_DATABASE_URL = "sqlite:///" + SQLALCHEMY_DATABASE_PATH
 try:
     os.remove(SQLALCHEMY_DATABASE_PATH)
-except FileNotFoundError:
+except FileNotFoundError:  # pragma: no cover
     pass
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
@@ -49,13 +49,29 @@ def test_one_account():
     res = response.json()
     assert res["name"] == "The super account"
 
-    # Get account
+    # Create another account
+    response = client.post(
+        "/accounts/",
+        json={"name": "Another account"},
+    )
+    assert response.status_code == 200
+    res = response.json()
+    assert res["name"] == "Another account"
+
+    # Create account with same name
+    response = client.post(
+        "/accounts/",
+        json={"name": "The super account"},
+    )
+    assert response.status_code == 400
+
+    # Get accounts
     response = client.get(
         "/accounts/"
     )
     assert response.status_code == 200
     res = response.json()
-    assert res["nb_rows"] == 1
+    assert res["nb_rows"] == 2
 
     response = client.get(
         "/accounts/1"
@@ -83,6 +99,13 @@ def test_one_account():
         json={"name": "The new super account"},
     )
     assert response.status_code == 404
+
+    # Update with a name that is already used
+    response = client.put(
+        "/accounts/1",
+        json={"name": "Another account"},
+    )
+    assert response.status_code == 400
 
     # Delete account
     response = client.delete(

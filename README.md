@@ -25,7 +25,7 @@ The current version is using a SQLite database (see .env file) and a very basic 
 
 ## Usage
 
-*Remember only to follow those instructions after editing the source code to bootstrap your new project.*
+* Remember only to follow those instructions after editing the source code to bootstrap your new project.*
 
 ### Install the application
 

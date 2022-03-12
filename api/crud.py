@@ -1,5 +1,13 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from . import models, schemas
+
+
+def commit(db: Session, name: str):
+    try:
+        db.commit()
+    except IntegrityError:
+        raise ValueError("Integrity error for " + name)
 
 
 # Accounts
@@ -15,7 +23,7 @@ def get_accounts(db: Session, skip: int = 0, limit: int = 100):
 def create_account(db: Session, account: schemas.AccountInit):
     db_item = models.Account(**account.dict())
     db.add(db_item)
-    db.commit()
+    commit(db, "account")
     db.refresh(db_item)
     return db_item
 
@@ -23,14 +31,14 @@ def create_account(db: Session, account: schemas.AccountInit):
 def update_account(db: Session, account_id: int, account: schemas.AccountInit, db_item: models.Account):
     for key, val in account.dict().items():
         setattr(db_item, key, val)
-    db.commit()
+    commit(db, "account")
     db.refresh(db_item)
     return db_item
 
 
 def delete_account(db: Session, account_id: int, db_item: models.Account):
     db.delete(db_item)
-    db.commit()
+    commit(db, "account")
     return {'result': f'Account {account_id} successfully deleted'}
 
 
@@ -47,7 +55,7 @@ def get_malls(db: Session, skip: int = 0, limit: int = 100):
 def create_mall(db: Session, mall: schemas.MallCreate):
     db_item = models.Mall(**mall.dict())
     db.add(db_item)
-    db.commit()
+    commit(db, "mall")
     db.refresh(db_item)
     return db_item
 
@@ -55,14 +63,14 @@ def create_mall(db: Session, mall: schemas.MallCreate):
 def update_mall(db: Session, mall_id: int, mall: schemas.MallCreate, db_item: models.Mall):
     for key, val in mall.dict().items():
         setattr(db_item, key, val)
-    db.commit()
+    commit(db, "mall")
     db.refresh(db_item)
     return db_item
 
 
 def delete_mall(db: Session, mall_id: int, db_item: models.Mall):
     db.delete(db_item)
-    db.commit()
+    commit(db, "mall")
     return {'result': f'Mall {mall_id} successfully deleted'}
 
 
@@ -79,7 +87,7 @@ def get_units(db: Session, skip: int = 0, limit: int = 100):
 def create_unit(db: Session, unit: schemas.UnitCreate):
     db_item = models.Unit(**unit.dict())
     db.add(db_item)
-    db.commit()
+    commit(db, "unit")
     db.refresh(db_item)
     return db_item
 
@@ -87,12 +95,12 @@ def create_unit(db: Session, unit: schemas.UnitCreate):
 def update_unit(db: Session, unit_id: int, unit: schemas.UnitCreate, db_item: models.Unit):
     for key, val in unit.dict().items():
         setattr(db_item, key, val)
-    db.commit()
+    commit(db, "unit")
     db.refresh(db_item)
     return db_item
 
 
 def delete_unit(db: Session, unit_id: int, db_item: models.Unit):
     db.delete(db_item)
-    db.commit()
+    commit(db, "unit")
     return {'result': f'Unit {unit_id} successfully deleted'}

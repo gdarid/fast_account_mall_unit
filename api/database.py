@@ -9,7 +9,7 @@ load_dotenv()
 
 try:
     SQLALCHEMY_DATABASE_URL = os.environ["SQLALCHEMY_DATABASE_URL"]
-except KeyError:
+except KeyError:  # pragma: no cover
     print("Please set the environment variable SQLALCHEMY_DATABASE_URL")
     sys.exit(1)
 
