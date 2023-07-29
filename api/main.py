@@ -75,7 +75,7 @@ def delete_account(account_id: int, db: Session = Depends(get_db)):
 
 # Malls
 @app.post("/malls/", response_model=schemas.Mall, tags=["mall"])
-def create_mall(mall: schemas.MallCreate, db: Session = Depends(get_db)):
+def create_mall(mall: schemas.MallInit, db: Session = Depends(get_db)):
     return crud.create_mall(db, mall)
 
 
@@ -95,7 +95,7 @@ def read_mall(mall_id: int, db: Session = Depends(get_db)):
 
 @app.put("/malls/{mall_id}", response_model=schemas.Mall, tags=["mall"])
 @app.patch("/malls/{mall_id}", response_model=schemas.Mall, tags=["mall"])
-def update_mall(mall_id: int, mall: schemas.MallCreate, db: Session = Depends(get_db)):
+def update_mall(mall_id: int, mall: schemas.MallInit, db: Session = Depends(get_db)):
     db_item = crud.get_mall(db, mall_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail=f"Mall {mall_id} not found")
@@ -112,7 +112,7 @@ def delete_mall(mall_id: int, db: Session = Depends(get_db)):
 
 # Units
 @app.post("/units/", response_model=schemas.Unit, tags=["unit"])
-def create_unit(unit: schemas.UnitCreate, db: Session = Depends(get_db)):
+def create_unit(unit: schemas.UnitInit, db: Session = Depends(get_db)):
     return crud.create_unit(db, unit)
 
 
@@ -132,7 +132,7 @@ def read_unit(unit_id: int, db: Session = Depends(get_db)):
 
 @app.put("/units/{unit_id}", response_model=schemas.Unit, tags=["unit"])
 @app.patch("/units/{unit_id}", response_model=schemas.Unit, tags=["unit"])
-def update_unit(unit_id: int, unit: schemas.UnitCreate, db: Session = Depends(get_db)):
+def update_unit(unit_id: int, unit: schemas.UnitInit, db: Session = Depends(get_db)):
     db_item = crud.get_unit(db, unit_id)
     if db_item is None:
         raise HTTPException(status_code=404, detail=f"Unit {unit_id} not found")

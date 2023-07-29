@@ -1,6 +1,6 @@
 """Schemas (pydantic models) : for requests/responses"""
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class UnitInit(BaseModel):
@@ -15,8 +15,7 @@ class Unit(UnitInit):
     id: int
     mall_id: Optional[int]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MallInit(BaseModel):
@@ -31,8 +30,7 @@ class Mall(MallInit):
     id: int
     owner_id: Optional[int]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AccountInit(BaseModel):
@@ -47,5 +45,4 @@ class Account(AccountInit):
     id: int
     malls: List[Mall] = []
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

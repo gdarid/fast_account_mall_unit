@@ -21,7 +21,7 @@ def get_accounts(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_account(db: Session, account: schemas.AccountInit):
-    db_item = models.Account(**account.dict())
+    db_item = models.Account(**account.model_dump())
     db.add(db_item)
     commit(db, "account")
     db.refresh(db_item)
@@ -29,7 +29,7 @@ def create_account(db: Session, account: schemas.AccountInit):
 
 
 def update_account(db: Session, account_id: int, account: schemas.AccountInit, db_item: models.Account):
-    for key, val in account.dict().items():
+    for key, val in account.model_dump().items():
         setattr(db_item, key, val)
     commit(db, "account")
     db.refresh(db_item)
@@ -52,16 +52,16 @@ def get_malls(db: Session, skip: int = 0, limit: int = 100):
     return nb_rows, db.query(models.Mall).offset(skip).limit(limit).all()
 
 
-def create_mall(db: Session, mall: schemas.MallCreate):
-    db_item = models.Mall(**mall.dict())
+def create_mall(db: Session, mall: schemas.MallInit):
+    db_item = models.Mall(**mall.model_dump())
     db.add(db_item)
     commit(db, "mall")
     db.refresh(db_item)
     return db_item
 
 
-def update_mall(db: Session, mall_id: int, mall: schemas.MallCreate, db_item: models.Mall):
-    for key, val in mall.dict().items():
+def update_mall(db: Session, mall_id: int, mall: schemas.MallInit, db_item: models.Mall):
+    for key, val in mall.model_dump().items():
         setattr(db_item, key, val)
     commit(db, "mall")
     db.refresh(db_item)
@@ -84,16 +84,16 @@ def get_units(db: Session, skip: int = 0, limit: int = 100):
     return nb_rows, db.query(models.Unit).offset(skip).limit(limit).all()
 
 
-def create_unit(db: Session, unit: schemas.UnitCreate):
-    db_item = models.Unit(**unit.dict())
+def create_unit(db: Session, unit: schemas.UnitInit):
+    db_item = models.Unit(**unit.model_dump())
     db.add(db_item)
     commit(db, "unit")
     db.refresh(db_item)
     return db_item
 
 
-def update_unit(db: Session, unit_id: int, unit: schemas.UnitCreate, db_item: models.Unit):
-    for key, val in unit.dict().items():
+def update_unit(db: Session, unit_id: int, unit: schemas.UnitInit, db_item: models.Unit):
+    for key, val in unit.model_dump().items():
         setattr(db_item, key, val)
     commit(db, "unit")
     db.refresh(db_item)
