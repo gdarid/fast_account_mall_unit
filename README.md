@@ -1,7 +1,6 @@
-# A boilerplate project for python packages
+# A boilerplate project 
 
-A boilerplate project to use when bootstrapping new Python 3 projects with FastApi.
-Copy the source code (no need to fork it), tweak the `setup.py` file to suit your needs and start doing things.
+A boilerplate project with a few models to use when bootstrapping new Python 3 projects with FastApi.
 
 
 ## Features
@@ -23,17 +22,8 @@ You can copy/paste anything and not worry about a thing, not even giving origina
 
 The current version is using a SQLite database (see .env file) and a very basic ORM.
 
-## Usage
 
-* Remember only to follow those instructions after editing the source code to bootstrap your new project.*
-
-### Install the application
-
-```shell
-pip install -e .
-```
-
-### Run the application in development mode
+## Run the application in development mode
 
 ```shell
 uvicorn api.main:app --reload
@@ -47,7 +37,7 @@ You will see the alternative automatic documentation (provided by ReDoc) here :
 
 [API description](http://127.0.0.1:8000/openapi.json)
 
-### Run test suite
+## Run test suite
 
 ```shell
 tox
@@ -61,6 +51,6 @@ coverage report
 coverage html
 ```
 
-### Github workflows
+## Github workflows
 
 The github workflows can be found in the `.github` folder
